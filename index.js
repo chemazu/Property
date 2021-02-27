@@ -5,8 +5,9 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const db = require("./config/keys").mongURI;
 
+//ROUTES
+app.use("/", require("./routes/index"));
 //CONNECTING MONGOOSE
-
 mongoose
   .connect(db, {
     useNewUrlParser: true,
