@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const app = express();
-const PORT = process.env.PORT || 8000;
-const db = require("./config/key").mongURI;
+const PORT = process.env.PORT || 4000;
+const db = require("./config/keys").mongURI;
 
 //CONNECTING MONGOOSE
 
