@@ -3,8 +3,15 @@ const mongoose = require("mongoose");
 // const expressLayouts = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const session = require("express-session");
+const passport = require("passport");
+
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+//passport config
+require("./config/passport")(passport);
+
+//database config
 const db = require("./config/keys").mongURI;
 
 //BODY PARSER "TO COLLECT DATA FROM FORMS"
@@ -20,6 +27,10 @@ app.use(
     // cookie: { secure: true },
   })
 );
+
+// INTIALIZING PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
 
 //CONNECT FLASH
 app.use(flash());
