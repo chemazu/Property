@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const expressLayouts = require("express-ejs-layouts");
-
+// const expressLayouts = require("express-ejs-layouts");
+const flash = require("connect-flash");
+const session = require("express-session");
 const app = express();
 const PORT = process.env.PORT || 4000;
 const db = require("./config/keys").mongURI;
@@ -9,6 +10,26 @@ const db = require("./config/keys").mongURI;
 //BODY PARSER "TO COLLECT DATA FROM FORMS"
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+//EXPRESS SESSION
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true,
+    // cookie: { secure: true },
+  })
+);
+
+//CONNECT FLASH
+app.use(flash());
+
+// GLOBAL VARIABLE (INSTEAD OF REPEATING FLASH MESSAGES)
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success message");
+  res.locals.error_msg = req.flash("error message");
+  next();
+});
 
 //ROUTES
 app.use("/", require("./routes/index"));

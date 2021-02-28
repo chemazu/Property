@@ -48,6 +48,13 @@ router.post("/register", async (req, res) => {
         });
         newUSer.save().then((user) => {
           res.redirect("/users/login");
+          console.log(
+            "flash message reg ",
+            req.flash(
+              "success_message.",
+              "you are now registered and can login"
+            )
+          );
         });
       }
     });
