@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
+//BRINGING IN USER MODEL
+const User = require("../models/user.model");
 //LOGIN PAGE
 router.get("/login", (req, res) => {
   res.status(200).json("login");
@@ -12,8 +15,10 @@ router.get("/register", (req, res) => {
   console.log(req.body);
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
+  const hashedpassword = await bcrypt.hash(password, 10);
+
   let errors = [];
   //validation
   //check required fields
@@ -26,10 +31,26 @@ router.post("/register", (req, res) => {
   }
   if (errors.length > 0) {
     // res.render("register", { errors, name, email, password });
-    console.log("register", { errors });
-    console.log(name);
+    console.log("register", { errors, name, email, password });
   } else {
-    res.send("pass");
+    // res.send("pass");.
+    //VALIDATION PASSED
+    User.findOne({ email: email }).then((user) => {
+      if (user) {
+        //User Exist
+        errors.push({ msg: "user already exists" });
+        console.log("user Exists", errors);
+      } else {
+        const newUSer = new User({
+          name,
+          email,
+          password: hashedpassword,
+        });
+        newUSer.save().then((user) => {
+          res.redirect("/users/login");
+        });
+      }
+    });
   }
 });
 module.exports = router;
