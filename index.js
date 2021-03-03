@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 // const expressLayouts = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const session = require("express-session");
+const cors = require("cors");
+
 const passport = require("passport");
 
 const app = express();
@@ -17,6 +19,8 @@ const db = require("./config/keys").mongURI;
 //BODY PARSER "TO COLLECT DATA FROM FORMS"
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//cors
+app.use(cors());
 
 //EXPRESS SESSION
 app.use(
