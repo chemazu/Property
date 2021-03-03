@@ -3,6 +3,7 @@ const schema = mongoose.Schema;
 
 const listingSchema = new schema(
   {
+    userId: { type: String, required: false },
     title: { type: String, required: true },
     location: { type: String, required: true },
     description: { type: String, required: true },

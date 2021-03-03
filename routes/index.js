@@ -8,6 +8,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
-  res.status(200).json(`Welcome to ${req.user.name}'s Dashboard`);
+  res.status(200).json(`Welcome to ${req.user.name}'s Dashboard`, req.user);
 });
 module.exports = router;
