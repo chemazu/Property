@@ -19,17 +19,59 @@ router.get("/register", (req, res) => {
 router.post("/register", async (req, res, next) => {
   const { name, email, password } = req.body;
   const hashedpassword = await bcrypt.hash(password, 10);
-  try {
-    User.findOne({ email: email }).then((user) => {
-      if (user) {
-        console.log("a user  exists", user, email, req.body);
-      } else {
-        console.log("no user", email, req.body);
-      }
-    });
-  } catch (error) {
-    console.log(error);
+
+  let errors = [];
+  //validation
+  //check required fields
+  if (!name || !email || !password) {
+    errors.push({ msg: "Please fill all the fields" });
+    res.status(200).json(errors);
   }
+  //check password
+  if (password.length < 8) {
+    errors.push({ msg: "password should be more than 8 characters" });
+  }
+  if (errors.length > 0) {
+    // res.render("register", { errors, name, email, password });
+    console.log("register", { errors, name, email, password });
+  } else {
+    try {
+      User.findOne({ email: email }).then((user) => {
+        if (user) {
+          errors.push({ msg: "user already exists" });
+          res.status(200).json(errors);
+        } else {
+          const newUSer = new User({
+            name,
+            email,
+            password: hashedpassword,
+          });
+          newUSer.save().then((user) => {
+            res.status(200).json("user sucessfully added");
+
+            // res.redirect("/users/login");
+            // res.status(200).json("pass");
+            console.log(user);
+
+            console.log(
+              "flash message reg ",
+              req.flash(
+                "success_message.",
+                "you are now registered and can login"
+              )
+            );
+          });
+        }
+        // else {
+        //   // console.log("no user", email, req.body);
+
+        // }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // User.findOne({ email: email }).then((user) => {
   //   if (user) {
   //     console.log("user exists");
@@ -62,7 +104,7 @@ router.post("/register", async (req, res, next) => {
 //     User.findOne({ email: email }).then((user) => {
 //       if (user) {
 //         //User Exist
-//         errors.push({ msg: "user already exists" });
+// errors.push({ msg: "user already exists" });
 //         console.log("user Exists", errors);
 //       } else {
 //         const newUSer = new User({

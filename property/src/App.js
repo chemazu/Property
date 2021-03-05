@@ -5,17 +5,15 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
       email: "",
+      password: "",
     };
   }
   handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:4000/users/register", {
-        name: "JOhn Doe",
-        email: "chukwuemekacaal@gmail.com",
-        password: "password",
-      })
+      .post("http://localhost:4000/users/register", this.state)
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -31,11 +29,11 @@ export class App extends Component {
       <div>
         <input
           type="text"
-          value={this.state.email}
+          value={this.state.name}
           onChange={this.handleChange}
-          placeholder="Enter Email"
+          placeholder="Enter Name"
           required
-          name="email"
+          name="name"
         />
         <input
           type="text"
@@ -46,12 +44,12 @@ export class App extends Component {
           name="email"
         />
         <input
-          type="text"
-          value={this.state.email}
+          type="password"
+          value={this.state.password}
           onChange={this.handleChange}
-          placeholder="Enter Email"
+          placeholder="Enter Password"
           required
-          name="email"
+          name="password"
         />
         <button onClick={this.handleSubmit}>Register</button>
       </div>
