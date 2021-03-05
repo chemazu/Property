@@ -18,20 +18,20 @@ const db = require("./config/keys").mongURI;
 
 //BODY PARSER "TO COLLECT DATA FROM FORMS"
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 //cors
 app.use(cors());
 
 //EXPRESS SESSION
+
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "super secret key",
     resave: true,
+    cookie: { maxAge: 1000 },
     saveUninitialized: true,
-    // cookie: { secure: true },
   })
 );
-
 // INTIALIZING PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());

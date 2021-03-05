@@ -28,6 +28,7 @@ router.post("/add", ensureAuthenticated, (req, res, next) => {
 //GET ALL LISTINGS
 router.get("/view", async (req, res, next) => {
   try {
+    console.log("no dup");
     const listingCollection = await listing.find();
     res.status(200).json(listingCollection);
   } catch (error) {
