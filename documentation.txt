@@ -1,0 +1,10 @@
+routes
+/dashboard: dashboard, requires authentication (protected route) to get in 
+/listings:add,view all , view specific...
+/login : register
+
+Frontend Templates:
+1. http://preview.themeforest.net/item/acres-real-estate-react-template/full_screen_preview/29896485?_ga=2.30149949.306583672.1615900366-1432402594.1613345286   (check out home 3 home 4)
+2. http://preview.themeforest.net/item/realdeal-real-estate-react-template/full_screen_preview/26673743?_ga=2.230967837.306583672.1615900366-1432402594.1613345286  (check out the footer section)
+3. http://preview.themeforest.net/item/evernest-real-estate-html-template/full_screen_preview/27642418?_ga=2.230776989.306583672.1615900366-1432402594.1613345286 (very similar to the property center very similar)
+
